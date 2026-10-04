@@ -1,0 +1,5 @@
+*.pac
+*.pem
+*.key
+__pycache__/
+*.pyc
