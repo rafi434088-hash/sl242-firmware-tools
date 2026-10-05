@@ -119,7 +119,11 @@ print('FDL1 md5:', hashlib.md5(bytes(fdl1_orig)).hexdigest())
 print('FDL2 md5:', hashlib.md5(bytes(fdl2_orig)).hexdigest())
 
 print('\n=== patch FDL1 (Check3 bypass for sig_type=1) ===')
-fdl1_patched = apply_patches(bytes(fdl1_orig), FDL1_PATCHES, 'FDL1')
+fdl1_pre  = apply_patches(bytes(fdl1_orig), FDL1_PATCHES, 'FDL1')
+print('\n=== resign FDL1 (any-key model: BROM uses cert+0x6c key) ===')
+inspect_cert(bytes(fdl1_pre), 'FDL1 pre-resign')
+fdl1_patched = resign_image(bytes(fdl1_pre))
+inspect_cert(bytes(fdl1_patched), 'FDL1 resigned')
 
 print('\n=== patch FDL2 (Check2+3 bypass for sig_type=0) ===')
 fdl2_patched = apply_patches(bytes(fdl2_orig), FDL2_PATCHES, 'FDL2')
